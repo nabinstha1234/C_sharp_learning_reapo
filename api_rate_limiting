@@ -1,0 +1,26 @@
+Implement Rate Limiting Middleware: Implement rate limiting middleware to enforce your rate limiting strategy. This can be done using libraries like AspNetCoreRateLimit in .NET.
+
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllers();
+
+    services.AddMemoryCache();
+
+    services.Configure<IpRateLimitOptions>(options =>
+    {
+        options.GeneralRules = new List<RateLimitRule>
+        {
+            new RateLimitRule
+            {
+                Endpoint = "*",
+                Limit = 100,
+                Period = "1m"
+            }
+        };
+    });
+
+    services.AddSingleton<IRateLimitConfiguration, MemoryCacheRateLimitConfiguration>();
+
+    services.AddHttpContextAccessor();
+    services.AddMvc();
+}
