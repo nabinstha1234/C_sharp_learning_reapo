@@ -1,0 +1,49 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+class Person
+{   public int Id { get; set; }
+    public string Name { get; set; }
+    public int NewField { get; set; } // new field
+}
+public class Program
+{
+	public static void Main()
+	{
+		List<Person> obj = new List<Person>{
+		new Person { Id = 1, Name = "Object 1" },
+    	new Person { Id = 2, Name = "Object 2" },
+    	new Person { Id = 3, Name = "Object 3" }
+		};
+		
+				 foreach (Person p in obj)
+        {
+            Console.WriteLine("Id: {0}, Name: {1}, NewField: {2}", p.Id, p.Name, p.NewField);
+        }
+		
+	List<Person> newList = obj.Select(user=>{
+	    if(user.Id ==1|| user.Id==2){
+		     user.NewField=10;
+	    }
+		return user;
+	}).Select(user=> new Person{Id=user.Id,Name=user.Name,NewField=10}).ToList();
+	
+		
+		 foreach (Person p in newList)
+        {
+            Console.WriteLine("Id: {0}, Name: {1}, NewField: {2}", p.Id, p.Name, p.NewField);
+        }	
+	}
+}
+
+/*
+Output:
+Id: 1, Name: Object 1, NewField: 0
+Id: 2, Name: Object 2, NewField: 0
+Id: 3, Name: Object 3, NewField: 0
+Id: 1, Name: Object 1, NewField: 10
+Id: 2, Name: Object 2, NewField: 10
+Id: 3, Name: Object 3, NewField: 10
+
+*/
